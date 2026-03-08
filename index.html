@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chargeback Evidence Builder</title>
+  <meta name="description" content="Generate a dispute-ready evidence pack: folder structure, checklist, and concise submission skeleton." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg: #060b16;
+      --panel: #121c31;
+      --panel-2: #16233d;
+      --line: rgba(255,255,255,.10);
+      --line-strong: rgba(255,255,255,.16);
+      --text: #eef4ff;
+      --muted: #9db0d3;
+      --muted-2: #6f84ad;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --purple: #7c3aed;
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(59,130,246,.18), transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, rgba(124,58,237,.16), transparent 50%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100%;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(59,130,246,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 50px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .hero {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .hero-icon {
+      width: 62px;
+      height: 62px;
+      min-width: 62px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      background: linear-gradient(135deg, rgba(59,130,246,.22), rgba(124,58,237,.22));
+      border: 1px solid rgba(59,130,246,.35);
+      box-shadow: 0 0 30px rgba(59,130,246,.18);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 2.4vw, 2.3rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+    }
+
+    h1 .grad {
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.55;
+      max-width: 760px;
+    }
+
+    .value-line {
+      margin-top: 10px;
+      color: #d7e6ff;
+      font-size: .98rem;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      font-size: .8rem;
+      color: #d8e6ff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.03);
+    }
+
+    .who {
+      margin-top: 18px;
+      border: 1px solid rgba(6,182,212,.16);
+      background: rgba(6,182,212,.06);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .who h2 {
+      margin: 0 0 10px;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: #9bd8e6;
+    }
+
+    .who ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: .95rem;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      padding: 14px;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: #b9c9e9;
+    }
+
+    .mini-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: .95rem;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.025);
+      padding: 18px;
+    }
+
+    .section-kicker {
+      margin: 0 0 12px;
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: #b9c9e9;
+      font-weight: 700;
+    }
+
+    .step {
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+
+    .step:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .step-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .step-label {
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #88a8df;
+      font-weight: 700;
+    }
+
+    .step-done {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      color: #86efac;
+      font-size: .86rem;
+      font-weight: 700;
+    }
+
+    .step-done.visible {
+      display: inline-flex;
+    }
+
+    .step-title {
+      margin: 0;
+      font-size: 1.16rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .step-help {
+      margin-top: 6px;
+      color: var(--muted-2);
+      line-height: 1.65;
+      font-size: .95rem;
+    }
+
+    .subgroup {
+      margin-top: 18px;
+    }
+
+    .subgroup-title {
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #b8c9e8;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .option {
+      appearance: none;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: .15s ease;
+      min-width: 150px;
+      flex: 1 1 auto;
+      text-align: left;
+      position: relative;
+      line-height: 1.35;
+    }
+
+    .option:hover {
+      transform: translateY(-1px);
+      border-color: rgba(59,130,246,.55);
+      color: var(--text);
+      background: rgba(59,130,246,.08);
+    }
+
+    .option.selected {
+      background: rgba(59,130,246,.16);
+      color: white;
+      border: 2px solid #3b82f6;
+      box-shadow: 0 0 0 1px rgba(59,130,246,.20), 0 10px 24px rgba(59,130,246,.14);
+      padding-right: 40px;
+      font-weight: 800;
+    }
+
+    .option.selected::after {
+      content: "✓";
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #86efac;
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .primary-btn, .ghost-btn, .copy-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: .15s ease;
+      padding: 13px 16px;
+      font-size: .95rem;
+    }
+
+    .primary-btn {
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 12px 28px rgba(59,130,246,.25);
+      flex: 1 1 220px;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 34px rgba(59,130,246,.33);
+    }
+
+    .ghost-btn {
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--line-strong);
+      flex: 1 1 180px;
+    }
+
+    .ghost-btn:hover {
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+    }
+
+    .loading {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .loading.visible {
+      display: inline-flex;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.18);
+      border-top-color: var(--cyan);
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .gate-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .82rem;
+      font-weight: 800;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,.03);
+      color: #dce9ff;
+    }
+
+    .badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .badge.green {
+      color: #86efac;
+      background: rgba(34,197,94,.09);
+      border-color: rgba(34,197,94,.22);
+    }
+
+    .badge.yellow {
+      color: #fde68a;
+      background: rgba(245,158,11,.10);
+      border-color: rgba(245,158,11,.20);
+    }
+
+    .badge.red {
+      color: #fca5a5;
+      background: rgba(239,68,68,.10);
+      border-color: rgba(239,68,68,.22);
+    }
+
+    .out-card {
+      display: none;
+    }
+
+    .out-card.visible {
+      display: block;
+    }
+
+    .pack-summary {
+      border: 1px solid rgba(34,197,94,.18);
+      background: rgba(34,197,94,.06);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .pack-summary h2 {
+      margin: 0 0 6px;
+      font-size: 1.16rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pack-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .pack-chip {
+      font-size: .8rem;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color: #dce9ff;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .summary-card {
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .summary-card h3 {
+      margin: 0 0 8px;
+      font-size: .88rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #b8c9e8;
+    }
+
+    .summary-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: .93rem;
+    }
+
+    .outputs-title {
+      margin: 0 0 12px;
+      font-size: .86rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #b9c9e9;
+      font-weight: 700;
+    }
+
+    .output-box {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .output-box h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      color: #eaf2ff;
+      line-height: 1.62;
+      font-size: .94rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .copy-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .copy-btn {
+      background: rgba(255,255,255,.04);
+      color: #dce9ff;
+      border: 1px solid var(--line-strong);
+      flex: 1 1 180px;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(59,130,246,.10);
+      border-color: rgba(59,130,246,.35);
+    }
+
+    .privacy {
+      margin-top: 14px;
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.55;
+      border: 1px dashed rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,.02);
+    }
+
+    .copy-status {
+      margin-top: 10px;
+      min-height: 20px;
+      color: #bfe5ff;
+      font-size: .92rem;
+    }
+
+    .foot {
+      text-align: center;
+      font-size: .88rem;
+      color: var(--muted-2);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 860px) {
+      .mini-grid,
+      .steps-grid,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero-icon {
+        width: 58px;
+        height: 58px;
+      }
+
+      .option {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="card">
+      <div class="hero">
+        <div class="hero-icon">🛡️</div>
+        <div>
+          <h1>Chargeback <span class="grad">Evidence Builder</span></h1>
+          <div class="subtitle">
+            Generate a dispute-ready evidence packet in seconds.
+          </div>
+          <div class="value-line">
+            Structure your dispute the way reviewers expect to see it.
+          </div>
+
+          <div class="pill-row">
+            <div class="pill">Evidence Pack v2.1</div>
+            <div class="pill">Interactive tool</div>
+            <div class="pill">Copy-ready outputs</div>
+            <div class="pill">Low-stress workflow</div>
+            <div class="pill">No guarantees</div>
+          </div>
+
+          <div class="who">
+            <h2>Who this tool is for</h2>
+            <ul>
+              <li>Digital product sellers dealing with chargebacks</li>
+              <li>Gumroad / Stripe / PayPal sellers</li>
+              <li>Creators preparing dispute evidence</li>
+            </ul>
+            <div style="margin-top:10px;color:var(--muted);font-size:.92rem;">Works best for digital product disputes.</div>
+          </div>
+
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>What this tool does</h3>
+              <ul>
+                <li>Structures a dispute-ready evidence packet</li>
+                <li>Generates Evidence Vault folder structure</li>
+                <li>Creates submission checklist</li>
+                <li>Builds concise submission skeleton</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>What this tool does NOT do</h3>
+              <ul>
+                <li>Does not guarantee chargeback wins</li>
+                <li>Does not contact banks or platforms</li>
+                <li>Does not replace legal advice</li>
+                <li>Does not fabricate or improve evidence</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card steps-grid">
+      <div class="panel">
+        <p class="section-kicker">Builder</p>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-label">Step 1 of 3</div>
+            <div class="step-done" id="step1Done">✓ Step complete</div>
+          </div>
+          <h2 class="step-title">Dispute reason</h2>
+          <div class="step-help">Choose the closest dispute reason. This controls the evidence emphasis and wording style.</div>
+          <div class="options">
+            <button type="button" class="option" data-group="reason" data-value="fraud">Fraud / Unauthorized</button>
+            <button type="button" class="option" data-group="reason" data-value="notreceived">Not received</button>
+            <button type="button" class="option" data-group="reason" data-value="notasdescribed">Not as described</button>
+            <button type="button" class="option" data-group="reason" data-value="refundnotprocessed">Refund not processed</button>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-label">Step 2 of 3</div>
+            <div class="step-done" id="step2Done">✓ Step complete</div>
+          </div>
+          <h2 class="step-title">Evidence availability</h2>
+          <div class="step-help">Mark what you truly have. Keep it factual.</div>
+
+          <div class="subgroup">
+            <div class="subgroup-title">Delivery / access proof</div>
+            <div class="options">
+              <button type="button" class="option" data-group="delivery" data-value="yes">Yes</button>
+              <button type="button" class="option" data-group="delivery" data-value="partial">Partial</button>
+              <button type="button" class="option" data-group="delivery" data-value="no">No</button>
+            </div>
+          </div>
+
+          <div class="subgroup">
+            <div class="subgroup-title">Policy visibility</div>
+            <div class="options">
+              <button type="button" class="option" data-group="policy" data-value="yes">Visible</button>
+              <button type="button" class="option" data-group="policy" data-value="unsure">Not sure</button>
+              <button type="button" class="option" data-group="policy" data-value="no">Missing</button>
+            </div>
+          </div>
+
+          <div class="subgroup">
+            <div class="subgroup-title">Communication with buyer</div>
+            <div class="options">
+              <button type="button" class="option" data-group="comms" data-value="yes">Full</button>
+              <button type="button" class="option" data-group="comms" data-value="some">Some</button>
+              <button type="button" class="option" data-group="comms" data-value="no">None</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-top">
+            <div class="step-label">Step 3 of 3</div>
+          </div>
+          <h2 class="step-title">Generate pack</h2>
+          <div class="step-help">Click once to generate your personal pack summary, folder structure, checklist, and submission skeleton.</div>
+          <div class="actions">
+            <button type="button" class="primary-btn" id="generateBtn">Generate my evidence pack</button>
+            <button type="button" class="ghost-btn" id="resetBtn">Reset</button>
+          </div>
+          <div class="loading" id="loadingBox">
+            <span class="spinner"></span>
+            <span>Generating your pack…</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="section-kicker">Decision gate</p>
+        <div class="step-help">This is a risk-aware readiness meter. It does not promise any outcome. It flags whether your basics are strong, borderline, or weak.</div>
+        <div class="gate-wrap" id="gateWrap">
+          <div class="badge yellow"><span class="dot"></span><span>Select options to see readiness</span></div>
+        </div>
+
+        <div class="output-box" style="margin-top:14px;">
+          <h3>Recommended emphasis</h3>
+          <pre id="emphasisBox">Pick your dispute reason to see what to emphasize.</pre>
+        </div>
+
+        <div class="output-box">
+          <h3>Quick rules</h3>
+          <pre>• Be factual. No emotion. No threats.
+• One clean packet beats many messy messages.
+• Include only relevant evidence.
+• Never fabricate, edit, or improve evidence.</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="card out-card" id="outputsCard">
+      <div class="pack-summary" id="packSummary"></div>
+
+      <p class="outputs-title">Generated outputs</p>
+
+      <div class="output-box">
+        <h3>Evidence Vault folder structure</h3>
+        <pre id="folderOutput"></pre>
+        <div class="copy-row">
+          <button type="button" class="copy-btn" id="copyFolderBtn">Copy folder structure</button>
+        </div>
+      </div>
+
+      <div class="output-box">
+        <h3>Submission checklist</h3>
+        <pre id="checklistOutput"></pre>
+        <div class="copy-row">
+          <button type="button" class="copy-btn" id="copyChecklistBtn">Copy checklist</button>
+        </div>
+      </div>
+
+      <div class="output-box">
+        <h3 id="skeletonHeading">Concise submission skeleton</h3>
+        <pre id="skeletonOutput"></pre>
+        <div class="copy-row">
+          <button type="button" class="copy-btn" id="copySkeletonBtn">Copy submission skeleton</button>
+          <button type="button" class="copy-btn" id="copyAllBtn">Copy ALL outputs</button>
+        </div>
+      </div>
+
+      <div class="privacy">
+        Generated locally in your browser. Nothing is stored or sent to servers.
+      </div>
+
+      <div class="copy-status" id="copyStatus"></div>
+    </div>
+
+    <div class="card foot">
+      <strong>Part of Chargeback Shield toolkit.</strong><br>
+      Educational guidance only. Not legal advice. Not affiliated with Gumroad, Stripe, PayPal, banks, or card networks.<br>
+      Updated monthly with new dispute logic and refinement notes.<br>
+      Support: add your email / contact link here.
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      reason: null,
+      delivery: null,
+      policy: null,
+      comms: null
+    };
+
+    const refs = {
+      step1Done: document.getElementById("step1Done"),
+      step2Done: document.getElementById("step2Done"),
+      gateWrap: document.getElementById("gateWrap"),
+      emphasisBox: document.getElementById("emphasisBox"),
+      generateBtn: document.getElementById("generateBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      loadingBox: document.getElementById("loadingBox"),
+      outputsCard: document.getElementById("outputsCard"),
+      packSummary: document.getElementById("packSummary"),
+      folderOutput: document.getElementById("folderOutput"),
+      checklistOutput: document.getElementById("checklistOutput"),
+      skeletonOutput: document.getElementById("skeletonOutput"),
+      skeletonHeading: document.getElementById("skeletonHeading"),
+      copyStatus: document.getElementById("copyStatus"),
+      copyFolderBtn: document.getElementById("copyFolderBtn"),
+      copyChecklistBtn: document.getElementById("copyChecklistBtn"),
+      copySkeletonBtn: document.getElementById("copySkeletonBtn"),
+      copyAllBtn: document.getElementById("copyAllBtn")
+    };
+
+    document.querySelectorAll(".option").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const group = btn.dataset.group;
+        const value = btn.dataset.value;
+
+        state[group] = value;
+
+        document.querySelectorAll(`.option[data-group="${group}"]`).forEach(el => {
+          el.classList.remove("selected");
+        });
+        btn.classList.add("selected");
+
+        updateStepChecks();
+        updateGate();
+        updateEmphasis();
+      });
+    });
+
+    refs.generateBtn.addEventListener("click", () => {
+      if (!isReadyToGenerate()) {
+        setCopyStatus("Complete Step 1 and all Step 2 selections first.", false);
+        return;
+      }
+
+      refs.copyStatus.textContent = "";
+      refs.loadingBox.classList.add("visible");
+      refs.outputsCard.classList.remove("visible");
+
+      setTimeout(() => {
+        refs.loadingBox.classList.remove("visible");
+        generateOutputs();
+        refs.outputsCard.classList.add("visible");
+        refs.outputsCard.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 700);
+    });
+
+    refs.resetBtn.addEventListener("click", () => {
+      const ok = confirm("Are you sure? This will clear your selections.");
+      if (!ok) return;
+
+      state.reason = null;
+      state.delivery = null;
+      state.policy = null;
+      state.comms = null;
+
+      document.querySelectorAll(".option").forEach(btn => btn.classList.remove("selected"));
+      refs.step1Done.classList.remove("visible");
+      refs.step2Done.classList.remove("visible");
+      refs.outputsCard.classList.remove("visible");
+      refs.loadingBox.classList.remove("visible");
+      refs.copyStatus.textContent = "";
+      updateGate();
+      updateEmphasis();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    function updateStepChecks() {
+      refs.step1Done.classList.toggle("visible", !!state.reason);
+      refs.step2Done.classList.toggle("visible", !!state.delivery && !!state.policy && !!state.comms);
+    }
+
+    function isReadyToGenerate() {
+      return !!(state.reason && state.delivery && state.policy && state.comms);
+    }
+
+    function updateGate() {
+      const result = getReadiness();
+      refs.gateWrap.innerHTML = "";
+
+      const main = document.createElement("div");
+      main.className = `badge ${result.color}`;
+      main.innerHTML = `<span class="dot"></span><span>${escapeHtml(result.label)}</span>`;
+      refs.gateWrap.appendChild(main);
+
+      if (result.explainer) {
+        const expl = document.createElement("div");
+        expl.className = "badge";
+        expl.innerHTML = `<span class="dot" style="background:#dce9ff;"></span><span>${escapeHtml(result.explainer)}</span>`;
+        refs.gateWrap.appendChild(expl);
+      }
+
+      result.notes.forEach(note => {
+        const b = document.createElement("div");
+        b.className = "badge";
+        b.innerHTML = `<span class="dot" style="background:#dce9ff;"></span><span>${escapeHtml(note)}</span>`;
+        refs.gateWrap.appendChild(b);
+      });
+    }
+
+    function getReadiness() {
+      if (!state.reason) {
+        return {
+          color: "yellow",
+          label: "Waiting for scenario selection",
+          explainer: "Choose a dispute reason to calculate readiness.",
+          notes: []
+        };
+      }
+
+      const weakDelivery = state.delivery === "no";
+      const weakPolicy = state.policy === "no";
+      const partialDelivery = state.delivery === "partial";
+      const unsurePolicy = state.policy === "unsure";
+      const noComms = state.comms === "no";
+
+      if (weakDelivery || weakPolicy) {
+        const notes = [];
+        if (weakDelivery) notes.push("Missing delivery/access proof");
+        if (weakPolicy) notes.push("Missing or unclear policy proof");
+        return {
+          color: "red",
+          label: "Weak",
+          explainer: "Core evidence is missing. De-escalation may be safer than fighting with a weak packet.",
+          notes
+        };
+      }
+
+      if (partialDelivery || unsurePolicy || noComms) {
+        const notes = [];
+        if (partialDelivery) notes.push("Delivery/access proof incomplete");
+        if (unsurePolicy) notes.push("Policy visibility unclear");
+        if (noComms) notes.push("No communication record");
+        return {
+          color: "yellow",
+          label: "Borderline",
+          explainer: "You have some structure, but 1–2 gaps should be fixed before submission.",
+          notes
+        };
+      }
+
+      return {
+        color: "green",
+        label: "Strong",
+        explainer: "Core pieces are present. Build one clean packet and keep it concise.",
+        notes: [
+          "Delivery/access proof present",
+          "Policy proof present",
+          "Communication record present"
+        ]
+      };
+    }
+
+    function updateEmphasis() {
+      if (!state.reason) {
+        refs.emphasisBox.textContent = "Pick your dispute reason to see what to emphasize.";
+        return;
+      }
+
+      const map = {
+        fraud: [
+          "Emphasize:",
+          "• transaction ID",
+          "• delivery/access timestamp",
+          "• account or access consistency proof",
+          "",
+          "De-emphasize:",
+          "• subjective quality complaints",
+          "• speculation about who committed fraud"
+        ],
+        notreceived: [
+          "Emphasize:",
+          "• delivery/access logs",
+          "• exact timestamp of access or send event",
+          "• order-to-delivery chain",
+          "",
+          "De-emphasize:",
+          "• long narrative without timestamps",
+          "• irrelevant screenshots"
+        ],
+        notasdescribed: [
+          "Emphasize:",
+          "• listing screenshot",
+          "• product preview / scope proof",
+          "• policy visibility",
+          "",
+          "De-emphasize:",
+          "• emotional defense",
+          "• vague statements about quality"
+        ],
+        refundnotprocessed: [
+          "Emphasize:",
+          "• refund confirmation",
+          "• exact date/time of refund action",
+          "• communication showing refund handling",
+          "",
+          "De-emphasize:",
+          "• generic claims like 'we refunded already' without proof",
+          "• unrelated product details"
+        ]
+      };
+
+      refs.emphasisBox.textContent = map[state.reason].join("\n");
+    }
+
+    function generateOutputs() {
+      const packId = createPackId();
+      const generatedAt = formatNow();
+      const reasonLabel = getReasonLabel();
+      const evidenceFocus = getEvidenceFocus();
+      const nextStep = getRecommendedNextStep();
+      const readiness = getReadiness();
+
+      refs.packSummary.innerHTML = `
+        <h2>✓ Pack ready</h2>
+        <div class="pack-meta">
+          <div class="pack-chip">Pack ID: ${escapeHtml(packId)}</div>
+          <div class="pack-chip">Generated: ${escapeHtml(generatedAt)}</div>
+          <div class="pack-chip">Scenario: ${escapeHtml(reasonLabel)}</div>
+          <div class="pack-chip">Readiness: ${escapeHtml(readiness.label)}</div>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h3>Your generated pack includes</h3>
+            <ul>
+              <li>Evidence Vault folder structure</li>
+              <li>Submission checklist</li>
+              <li>Concise submission skeleton</li>
+            </ul>
+          </div>
+          <div class="summary-card">
+            <h3>Evidence emphasis</h3>
+            <ul>
+              ${evidenceFocus.map(item => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+
+        <div class="summary-card" style="margin-top:12px;">
+          <h3>Recommended next step</h3>
+          <ul>
+            <li>${escapeHtml(nextStep)}</li>
+          </ul>
+        </div>
+      `;
+
+      refs.folderOutput.textContent = buildFolderStructure();
+      refs.checklistOutput.textContent = buildChecklist();
+      refs.skeletonOutput.textContent = buildSkeleton();
+      refs.skeletonHeading.textContent = `Concise submission skeleton: ${reasonLabel}`;
+    }
+
+    function createPackId() {
+      const n = Math.floor(1000 + Math.random() * 9000);
+      return "EV-" + n;
+    }
+
+    function formatNow() {
+      const now = new Date();
+      return now.toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function getReasonLabel() {
+      const map = {
+        fraud: "Fraud / Unauthorized",
+        notreceived: "Not received",
+        notasdescribed: "Not as described",
+        refundnotprocessed: "Refund not processed"
+      };
+      return map[state.reason] || "Unknown";
+    }
+
+    function getEvidenceFocus() {
+      const common = [];
+      if (state.delivery === "yes") common.push("Strong delivery/access evidence");
+      if (state.delivery === "partial") common.push("Partial delivery/access evidence");
+      if (state.delivery === "no") common.push("No delivery/access proof");
+
+      if (state.policy === "yes") common.push("Policy visibility confirmed");
+      if (state.policy === "unsure") common.push("Policy visibility unclear");
+      if (state.policy === "no") common.push("Policy proof missing");
+
+      if (state.comms === "yes") common.push("Full buyer communication history");
+      if (state.comms === "some") common.push("Partial communication history");
+      if (state.comms === "no") common.push("No communication history");
+
+      switch (state.reason) {
+        case "fraud":
+          return ["Fraud dispute pattern", "Transaction evidence", "Delivery/access confirmation"].concat(common);
+        case "notreceived":
+          return ["Delivery timeline", "Access proof", "Order-to-delivery chain"].concat(common);
+        case "notasdescribed":
+          return ["Listing clarity", "Buyer expectation proof", "Policy visibility"].concat(common);
+        case "refundnotprocessed":
+          return ["Refund confirmation", "Timestamp proof", "Communication trail"].concat(common);
+        default:
+          return common;
+      }
+    }
+
+    function getRecommendedNextStep() {
+      const weak = state.delivery === "no" || state.policy === "no";
+      if (weak) {
+        return "Consider whether de-escalation or refund is lower risk before sending a weak packet.";
+      }
+      if (state.delivery === "partial" || state.policy === "unsure" || state.comms === "no") {
+        return "Plug 1–2 evidence gaps first, then prepare one clean submission packet.";
+      }
+      return "Prepare one clean submission packet before contacting the platform.";
+    }
+
+    function buildFolderStructure() {
+      const reasonFolder =
+        state.reason === "fraud" ? "07_Account_Usage" :
+        state.reason === "notreceived" ? "07_Delivery_Method" :
+        state.reason === "notasdescribed" ? "07_Product_Preview" :
+        "07_Refund_Confirmation";
+
+      return [
+        "Evidence_Vault/",
+        "01_Order/",
+        "02_Delivery_or_Access/",
+        "03_Listing/",
+        "04_Policy/",
+        "05_Communication/",
+        "06_Timeline/",
+        reasonFolder + "/",
+        "",
+        "Naming pattern:",
+        "YYYY-MM-DD__Category__WhatItIs__OrderID__v1"
+      ].join("\n");
+    }
+
+    function buildChecklist() {
+      const lines = [
+        "• Order confirmation or receipt",
+        "• Listing screenshot from purchase period",
+        "• Policy proof (refund / fulfillment terms)",
+        "• Timeline summary (purchase → delivery → contact → dispute)"
+      ];
+
+      if (state.delivery === "yes") {
+        lines.push("• Strong delivery/access proof with timestamps");
+      } else if (state.delivery === "partial") {
+        lines.push("• Partial delivery/access proof — strengthen if possible");
+      } else {
+        lines.push("• Delivery/access proof missing — risk is elevated");
+      }
+
+      if (state.comms === "yes") {
+        lines.push("• Full communication log");
+      } else if (state.comms === "some") {
+        lines.push("• Partial communication log");
+      } else {
+        lines.push("• No communication record");
+      }
+
+      if (state.reason === "fraud") {
+        lines.push("• Account or access consistency evidence (if available)");
+      }
+      if (state.reason === "notreceived") {
+        lines.push("• Delivery method / access route evidence");
+      }
+      if (state.reason === "notasdescribed") {
+        lines.push("• Product preview or scope proof");
+      }
+      if (state.reason === "refundnotprocessed") {
+        lines.push("• Refund action proof with exact date/time");
+      }
+
+      lines.push("• Final packet kept short, factual, and non-emotional");
+      return lines.join("\n");
+    }
+
+    function buildSkeleton() {
+      const reasonLabel = getReasonLabel();
+      const emphasis =
+        state.reason === "fraud" ? "Focus on delivery/access proof and account consistency." :
+        state.reason === "notreceived" ? "Focus on timestamps and delivery method." :
+        state.reason === "notasdescribed" ? "Focus on what buyer saw and what was delivered." :
+        "Focus on refund confirmation and exact timing.";
+
+      const gapLine =
+        state.delivery === "no" ? "Evidence gap: delivery/access proof is missing." :
+        state.delivery === "partial" ? "Evidence gap: delivery/access proof is partial." :
+        state.policy === "no" ? "Evidence gap: policy proof is missing." :
+        state.policy === "unsure" ? "Evidence gap: policy visibility is unclear." :
+        state.comms === "no" ? "Evidence gap: no communication record." :
+        "No major evidence gaps flagged by current selections.";
+
+      return [
+        `Dispute reason: ${reasonLabel}`,
+        "",
+        "Generated summary structure:",
+        "",
+        "1) What happened",
+        "• On [DATE], buyer placed order [ORDER ID] for [PRODUCT].",
+        "• Delivery/access was provided on [DATE/TIME] via [METHOD].",
+        "• Buyer contacted support on [DATE] about [ISSUE], and response was sent on [DATE].",
+        "• Dispute opened on [DATE].",
+        "",
+        "2) Evidence references",
+        "• Order proof: [FILE NAME]",
+        "• Listing snapshot: [FILE NAME]",
+        "• Policy proof: [FILE NAME]",
+        "• Delivery/access proof: [FILE NAME]",
+        "• Communication: [FILE NAME]",
+        "• Timeline: [FILE NAME]",
+        "",
+        "3) What the evidence proves",
+        `• ${emphasis}`,
+        "• The attached materials show the transaction, the delivery/access event, and the relevant terms.",
+        "",
+        "4) Closing",
+        "• Please review the attached evidence packet. Thank you.",
+        "",
+        `Gap note: ${gapLine}`
+      ].join("\n");
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (e) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.top = "-9999px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+          const ok = document.execCommand("copy");
+          document.body.removeChild(ta);
+          return ok;
+        } catch {
+          document.body.removeChild(ta);
+          return false;
+        }
+      }
+    }
+
+    function setCopyStatus(message, good = true) {
+      refs.copyStatus.textContent = message;
+      refs.copyStatus.style.color = good ? "#bfe5ff" : "#fde68a";
+      setTimeout(() => {
+        if (refs.copyStatus.textContent === message) {
+          refs.copyStatus.textContent = "";
+        }
+      }, 2000);
+    }
+
+    refs.copyFolderBtn.addEventListener("click", async () => {
+      const ok = await copyText(refs.folderOutput.textContent);
+      setCopyStatus(ok ? "✓ Copied to clipboard!" : "Copy failed.", ok);
+    });
+
+    refs.copyChecklistBtn.addEventListener("click", async () => {
+      const ok = await copyText(refs.checklistOutput.textContent);
+      setCopyStatus(ok ? "✓ Copied to clipboard!" : "Copy failed.", ok);
+    });
+
+    refs.copySkeletonBtn.addEventListener("click", async () => {
+      const ok = await copyText(refs.skeletonOutput.textContent);
+      setCopyStatus(ok ? "✓ Copied to clipboard!" : "Copy failed.", ok);
+    });
+
+    refs.copyAllBtn.addEventListener("click", async () => {
+      const all = [
+        "=== Evidence Vault folder structure ===",
+        refs.folderOutput.textContent,
+        "",
+        "=== Submission checklist ===",
+        refs.checklistOutput.textContent,
+        "",
+        "=== Concise submission skeleton ===",
+        refs.skeletonOutput.textContent
+      ].join("\n");
+      const ok = await copyText(all);
+      setCopyStatus(ok ? "✓ Copied to clipboard!" : "Copy failed.", ok);
+    });
+
+    updateGate();
+    updateEmphasis();
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
